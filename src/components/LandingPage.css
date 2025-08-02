@@ -1,0 +1,116 @@
+.hero-background {
+  background-image: linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.9) 0%,
+      rgba(67, 56, 202, 0.85) 30%,
+      rgba(99, 102, 241, 0.9) 70%,
+      rgba(67, 56, 202, 0.95) 100%
+    ),
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(99, 102, 241, 0.4) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(129, 140, 248, 0.3) 0%,
+      transparent 50%
+    ),
+    linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.35)),
+    url("https://i.ibb.co/wN5TrtDW/medium-shot-woman-enjoying-blue-matcha-home-1-removebg-preview.png");
+  background-size: cover, 800px 800px, 600px 600px, cover, cover;
+  background-position: center, 20% 80%, 80% 20%, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: overlay, screen, screen, multiply, normal;
+  background-attachment: fixed;
+}
+
+/* Enhanced text shadows with indigo theme */
+.enhanced-text-shadow {
+  text-shadow: 0 2px 4px rgba(67, 56, 202, 0.6), 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Rhythmic animation system */
+.fade-in-up {
+  animation: fadeInUp 1.2s ease-out;
+}
+
+.fade-in-up-delay-1 {
+  animation: fadeInUp 1.2s ease-out 0.2s both;
+}
+
+.fade-in-up-delay-2 {
+  animation: fadeInUp 1.2s ease-out 0.4s both;
+}
+
+.fade-in-up-delay-3 {
+  animation: fadeInUp 1.2s ease-out 0.6s both;
+}
+
+.fade-in-up-delay-4 {
+  animation: fadeInUp 1.2s ease-out 0.8s both;
+}
+
+/* Pulse animation for brand elements */
+.pulse-indigo {
+  animation: pulseIndigo 2s ease-in-out infinite;
+}
+
+@keyframes pulseIndigo {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+  }
+}
+
+/* Floating elements for rhythm */
+.float-rhythm {
+  animation: floatRhythm 3s ease-in-out infinite;
+}
+
+@keyframes floatRhythm {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+/* Brand color variations */
+.indigo-glow {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 0 40px rgba(99, 102, 241, 0.1);
+}
+
+.indigo-border-glow {
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glass morphism effect with indigo theme */
+.glass-container {
+  background: rgba(99, 102, 241, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 1rem 0;
+}

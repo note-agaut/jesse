@@ -1,0 +1,36 @@
+.record-button {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+  border: 4px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible; /* allow SVG to show outside if needed */
+}
+.record-progress-ring {
+  position: absolute;
+  top: -5.4px;
+  left: -5.4px;
+  width: 83px;
+  height: 83px;
+  pointer-events: none;
+  z-index: 2;
+}
+.record-inner {
+  background: #ff1744;
+  border: 0px solid #000;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.add-sound {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 4px 12px;
+}

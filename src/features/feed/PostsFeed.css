@@ -1,0 +1,7 @@
+.feed-main > *:not(:first-child) {
+  border-top: 1px solid #e5e7eb; /* Tailwind's border-gray-200 */
+}
+
+.dark .feed-main > *:not(:first-child) {
+  border-top: 1px solid #2d2f36; /* Match your dark border-gray-200 */
+}

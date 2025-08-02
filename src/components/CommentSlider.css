@@ -1,0 +1,29 @@
+@keyframes slideUpGraceful {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes slideDownGraceful {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+#commentSlider {
+  will-change: transform;
+}
+
+#commentSlider.open {
+  animation: slideUpGraceful 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+#commentSlider.closed {
+  animation: slideDownGraceful 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}

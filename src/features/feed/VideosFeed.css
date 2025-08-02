@@ -1,0 +1,26 @@
+/* Custom scrollbar styling */
+.feed-container::-webkit-scrollbar {
+  display: none;
+}
+
+.feed-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth scroll behavior */
+.feed-container {
+  scroll-behavior: smooth;
+}
+
+/* Ensure images cover the full container */
+.feed-item {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.feed-item > img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
