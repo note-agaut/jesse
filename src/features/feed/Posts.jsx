@@ -8,6 +8,7 @@ import {
   ShareFat,
   SealCheck,
   ArrowBendUpLeft,
+  BookmarkSimple, // Add this
 } from "@phosphor-icons/react";
 import "./Posts.css";
 import bellSound from "../../assets/bell.mp3"; // import bellSound
@@ -109,9 +110,9 @@ export default function PostCard({
               className="font-semibold text-[16px] text-indigo-500"
               weight="fill"
             />
-             <button className="system-base-text font-medium text-indigo-500 relative">
-                Follow
-              </button>
+            <button className="system-base-text font-medium text-indigo-500 relative">
+              Follow
+            </button>
           </div>
           <button className="p-0">
             <DotsThreeVertical className="text-2xl muted-text" />
@@ -154,7 +155,7 @@ export default function PostCard({
           onClick={handlePrev}
           type="button"
         >
-          <CaretLeft className="text-[1.25rem] text-white" />
+          <CaretLeft className="text-[1.25rem] svg" />
         </button>
         <button
           className={`carousel-nav next absolute right-2 top-1/2 -translate-y-1/2 ${
@@ -163,7 +164,7 @@ export default function PostCard({
           onClick={handleNext}
           type="button"
         >
-          <CaretRight className="text-2xl text-white" />
+          <CaretRight className="text-2xl svg" />
         </button>
 
         <div className="carousel-dots absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-2">
@@ -201,7 +202,7 @@ export default function PostCard({
                 />
               </span>
             )}
-            <span className="text-sm font-medium muted-text ml-1">1.2K</span>
+            <span className="text-sm  ml-1">1.2K</span>
           </button>
           <button
             className="flex items-center gap-0.3"
@@ -209,15 +210,15 @@ export default function PostCard({
             onClick={onPostClick} // Add this prop
           >
             <ChatCircle className="text-2xl" />
-            <span className="text-sm font-medium ml-1">300</span>
-          </button>
-          <button className="flex items-center gap-0.3" type="button">
-            <ArrowBendUpLeft className="text-2xl" />
-            <span className="text-sm font-medium ml-1">300</span>
+            <span className="text-sm f ml-1">300</span>
           </button>
           <button className="flex items-center gap-0.3" type="button">
             <ShareFat className="text-2xl" />
-            <span className="text-sm font-medium ml-1">10</span>
+            <span className="text-sm  ml-1">300</span>
+          </button>
+          <button className="flex items-center gap-0.3" type="button">
+            <BookmarkSimple className="text-2xl" />
+            <span className="text-sm  ml-1">10</span>
           </button>
         </div>
       </div>
@@ -229,7 +230,6 @@ export default function PostCard({
             Had a great moment with
             <span className="text-indigo-500"> @davis_lomba</span>
           </span>
-          
         </div>
       </div>
 
@@ -241,47 +241,13 @@ export default function PostCard({
         </span>
         {/* Only show avatars and "and 2 others commented" if NOT hidden */}
         {!hideMutualComments && (
-          <div className="text-sm system-color" style={{ whiteSpace: "nowrap" }}>
-            <span style={{ display: "inline-block" }}>
-              <img
-                src="https://picsum.photos/200/100"
-                alt="User 1"
-                className="w-6 h-6 rounded-full border-2 border-white bg-gray-200"
-                style={{
-                  display: "inline-block",
-                  verticalAlign: "middle",
-                  marginRight: "-8px",
-                }}
-              />
-              <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face"
-                alt="User 2"
-                className="w-6 h-6 rounded-full border-2 border-white bg-gray-200"
-                style={{
-                  display: "inline-block",
-                  verticalAlign: "middle",
-                  marginRight: "-8px",
-                }}
-              />
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face"
-                alt="User 3"
-                className="w-6 h-6 rounded-full border-2 border-white bg-gray-200"
-                style={{
-                  display: "inline-block",
-                  verticalAlign: "middle",
-                  marginRight: "4px",
-                }}
-              />
-            </span>
-            <span
-              className="muted-text text-sm"
-              style={{
-                display: "inline-block",
-                verticalAlign: "middle",
-              }}
-            >
-              and 2 others commented
+          <div
+            className="text-sm system-color"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            <span className="text-sm text-indigo-500">
+              mario231{" "}
+              <span className="muted-text">and 5 others commented</span>
             </span>
           </div>
         )}

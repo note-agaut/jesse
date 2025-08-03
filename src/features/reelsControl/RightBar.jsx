@@ -47,7 +47,7 @@ export default function RightBar() {
       {/* More button */}
       <div className="reaction-container flex flex-col items-center">
         <button className="reaction-btn ">
-          <DotsThreeVertical className="text-white/75 text-3xl" />
+          <DotsThreeVertical className="text-white/70 text-3xl" />
         </button>
       </div>
       {/* User Avatar with Follow Button */}
@@ -103,15 +103,15 @@ export default function RightBar() {
           <Heart
             className={
               isLiked
-                ? "text-indigo-600/75 text-3xl like-animation"
-                : " text-white/65 text-3xl"
+                ? "text-indigo-600/70 text-3xl like-animation"
+                : " text-white/70 text-3xl"
             }
             weight="fill" // Always use fill
           />
           {showFloatingHeart && (
             <span className="floating-heart absolute left-1/2 top-1/2 pointer-events-none">
               <Heart
-                className="text-indigo-600/65 text-3xl animate-float-up"
+                className="text-indigo-600/70 text-3xl animate-float-up"
                 weight="fill"
               />
             </span>
@@ -128,7 +128,7 @@ export default function RightBar() {
           className="reaction-btn comment-btn mb-1"
           onClick={handleOpenComments}
         >
-          <ChatCircle className="text-white/65 text-3xl" weight="fill" />
+          <ChatCircle className="text-white/70 text-3xl" weight="fill" />
         </button>
         <span className="count-text text-white text-xs font-semibold comment-count">
           89
@@ -141,7 +141,7 @@ export default function RightBar() {
           className="reaction-btn share-btn mb-1"
           onClick={() => setShareCount((c) => c + 1)}
         >
-          <PaperPlaneTilt className="text-white/65 text-3xl" weight="fill" />
+          <PaperPlaneTilt className="text-white/70 text-3xl" weight="fill" />
         </button>
         <span className="count-text text-white text-xs font-semibold share-count">
           {formatCount(shareCount)}

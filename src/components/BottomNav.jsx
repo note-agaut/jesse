@@ -99,7 +99,7 @@ export default function BottomNav({
       <div
         className={`glass-bottom-nav ${navBgClass} ${
           className || "system-border-top"
-        } fixed bottom-0 left-0 right-0 z-50 h-[62px] flex items-center justify-between px-4 safe-area-inset-bottom`}
+        } fixed bottom-0 left-0 right-0 z-50 h-[54px] flex items-center justify-between px-4 safe-area-inset-bottom`}
         ref={navRef}
       >
         {/* Left tabs */}
@@ -139,7 +139,7 @@ export default function BottomNav({
               disabled={tab.isReload}
             >
               {iconWithWeight}
-              <span className="text-xs mt-1">{tab.label}</span>
+              <span className="text-xs mt-0.5">{tab.label}</span>
               {tab.badge && (
                 <span className="absolute top-0 -right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
                   {tab.badge}
@@ -168,7 +168,7 @@ export default function BottomNav({
                 aria-label={tab.label}
               >
                 {iconWithWeight}
-                <span className="text-xs mt-1">{tab.label}</span>
+                <span className="text-xs mt-0.5">{tab.label}</span>
                 {tab.badge && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
                     {tab.badge}
@@ -192,7 +192,7 @@ export default function BottomNav({
             className="text-2xl"
             weight={page === "recording" ? "fill" : "regular"}
           />
-          <span className="text-xs mt-1">Create</span>
+          <span className="text-xs mt-0.5">Create</span>
         </button>
 
         {/* Rest of right tabs */}
@@ -212,7 +212,7 @@ export default function BottomNav({
               aria-label={tab.label}
             >
               {iconWithWeight}
-              <span className="text-xs mt-1">{tab.label}</span>
+              <span className="text-xs mt-0.5">{tab.label}</span>
               {tab.badge && (
                 <span className="absolute -top-1 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
                   {tab.badge}

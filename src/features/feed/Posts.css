@@ -35,8 +35,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+  background-color: rgba(255, 255, 255, 0.8);
   border: none;
   width: 32px;
   height: 32px;
@@ -47,9 +46,17 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.carousel-nav:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+
+/* Add these new rules for the caret icons */
+.carousel-nav .svg {
+  mix-blend-mode: difference;
+  color: white;
 }
+
+.carousel-nav:hover svg {
+  opacity: 1;
+}
+
 .carousel-nav.prev {
   left: 12px;
 }

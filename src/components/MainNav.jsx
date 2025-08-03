@@ -1,5 +1,5 @@
-import React from "react";
-import { MagnifyingGlass, CaretDown } from "@phosphor-icons/react";
+import React, { useState, useEffect } from "react";
+import { MagnifyingGlass, CaretDown, Check } from "@phosphor-icons/react";
 import { useNavigationStore } from "../store/useNavigationStore";
 
 export default function MainNav({
@@ -9,10 +9,24 @@ export default function MainNav({
 }) {
   const setPage = useNavigationStore((state) => state.setPage);
   const page = useNavigationStore((state) => state.page);
+  const [activeDropdown, setActiveDropdown] = useState(null); // Add this state
+  const [selectedOptions, setSelectedOptions] = useState({
+    videos: "For You",
+    posts: "For You",
+  }); // Track selected options for each tab
 
-  // Dummy handlers for dropdown (replace with real logic as needed)
-  function toggleDropdown() {}
-  function selectOption() {}
+  // Update the handlers
+  function toggleDropdown(type) {
+    setActiveDropdown(activeDropdown === type ? null : type);
+  }
+
+  function selectOption(option, type) {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [type]: option,
+    }));
+    setActiveDropdown(null);
+  }
 
   // Navigate to PostsFeed when Posts tab is clicked
   function handlePostsTabClick() {
@@ -38,16 +52,30 @@ export default function MainNav({
     ? "border-b border-white/30"
     : "border-b border-gray-200";
 
+  // Add this effect after the state declarations
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (activeDropdown && !event.target.closest(".dropdown-container")) {
+        setActiveDropdown(null);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [activeDropdown]);
+
   return (
     // Navigation Wrapper
     <nav
       id="main-nav"
-      className={`fixed top-0 left-0 right-0 z-40 px-4 py-2 ${borderClass} ${
+      className={`fixed top-0 left-0 right-0 z-40 h-[48px] flex items-center px-4 ${borderClass} ${
         transparent ? "bg-transparent" : "bg-white"
       }`}
     >
       {/* Centered Navigation Tabs */}
-      <div className="flex justify-center">
+      <div className="flex justify-center flex-1">
         <div className="flex items-center space-x-6">
           {/* Videos Tab */}
           <div className="relative">
@@ -62,7 +90,7 @@ export default function MainNav({
                 {/* Active indicator - only under text if active */}
                 {page === "home" && (
                   <div
-                    className={`absolute -bottom-2 left-0 right-0 h-0.5 ${indicatorClass}`}
+                    className={`absolute -bottom-3 left-0 right-0 h-0.5 ${indicatorClass}`}
                   ></div>
                 )}
               </div>
@@ -93,7 +121,7 @@ export default function MainNav({
       before:from-white/20 
       before:to-transparent 
       before:opacity-50"
-                  onClick={() => toggleDropdown()}
+                  onClick={() => toggleDropdown("videos")}
                 >
                   <CaretDown
                     className="text-white text-xs relative z-10"
@@ -105,22 +133,32 @@ export default function MainNav({
 
             {/* Dropdown Menu */}
             <div
-              id="dropdown"
-              className="hidden absolute top-full left-0 mt-2 bg-black/80 backdrop-blur-sm rounded-lg py-2 min-w-[120px] shadow-lg z-10"
+              className={`${
+                activeDropdown === "videos" ? "block" : "hidden"
+              } absolute top-full left-0 mt-3 bg-white/90 backdrop-blur-xl 
+rounded-xl py-1.5 min-w-[140px] shadow-lg 
+ring-1 ring-black/5 transform-gpu 
+animate-fadeIn`}
             >
               <div
-                className="flex items-center justify-between px-4 py-2 text-white hover:bg-white/10 cursor-pointer"
-                onClick={() => selectOption("For You")}
+                className="flex items-center justify-between px-3 py-2 mx-1 text-sm text-gray-700 
+    rounded-md cursor-pointer transition-colors duration-150"
+                onClick={() => selectOption("For You", "videos")}
               >
                 <span>For You</span>
-                {/* Replace check icon with phosphor icon if needed */}
+                {selectedOptions.videos === "For You" && (
+                  <Check className="text-indigo-500" weight="bold" size={16} />
+                )}
               </div>
               <div
-                className="flex items-center justify-between px-4 py-2 text-white hover:bg-white/10 cursor-pointer"
-                onClick={() => selectOption("Following")}
+                className="flex items-center justify-between px-3 py-2 mx-1 text-sm text-gray-700 
+    rounded-md cursor-pointer transition-colors duration-150"
+                onClick={() => selectOption("Following", "videos")}
               >
                 <span>Following</span>
-                {/* Replace check icon with phosphor icon if needed */}
+                {selectedOptions.videos === "Following" && (
+                  <Check className="text-indigo-500" weight="bold" size={16} />
+                )}
               </div>
             </div>
           </div>
@@ -137,7 +175,7 @@ export default function MainNav({
                 {/* Active indicator - only under text if active */}
                 {page === "postsFeed" && (
                   <div
-                    className={`absolute -bottom-2 left-0 right-0 h-0.5 ${indicatorClass}`}
+                    className={`absolute -bottom-3 left-0 right-0 h-0.5 ${indicatorClass}`}
                   ></div>
                 )}
               </div>
@@ -159,7 +197,7 @@ export default function MainNav({
       hover:from-indigo-600 hover:to-indigo-700
       hover:shadow-md
       active:scale-95"
-                  onClick={() => toggleDropdown()}
+                  onClick={() => toggleDropdown("posts")}
                 >
                   <CaretDown className="text-white text-xs" weight="bold" />
                 </button>
@@ -168,22 +206,32 @@ export default function MainNav({
 
             {/* Dropdown Menu */}
             <div
-              id="dropdown"
-              className="hidden absolute top-full left-0 mt-2 bg-black/80 backdrop-blur-sm rounded-lg py-2 min-w-[120px] shadow-lg z-10"
+              className={`${
+                activeDropdown === "posts" ? "block" : "hidden"
+              } absolute top-full left-0 mt-3 bg-white rounded-xl 
+py-1.5 min-w-[140px] shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] 
+border border-gray-200/70 transform-gpu 
+animate-fadeIn`}
             >
               <div
-                className="flex items-center justify-between px-4 py-2 text-white hover:bg-white/10 cursor-pointer"
-                onClick={() => selectOption("For You")}
+                className="flex items-center justify-between px-3 py-2 mx-1 text-sm text-gray-700 
+    rounded-md cursor-pointer transition-colors duration-150"
+                onClick={() => selectOption("For You", "posts")}
               >
                 <span>For You</span>
-                {/* Replace check icon with phosphor icon if needed */}
+                {selectedOptions.posts === "For You" && (
+                  <Check className="text-indigo-500" weight="bold" size={16} />
+                )}
               </div>
               <div
-                className="flex items-center justify-between px-4 py-2 text-white hover:bg-white/10 cursor-pointer"
-                onClick={() => selectOption("Following")}
+                className="flex items-center justify-between px-3 py-2 mx-1 text-sm text-gray-700 
+    rounded-md cursor-pointer transition-colors duration-150"
+                onClick={() => selectOption("Following", "posts")}
               >
                 <span>Following</span>
-                {/* Replace check icon with phosphor icon if needed */}
+                {selectedOptions.posts === "Following" && (
+                  <Check className="text-indigo-500" weight="bold" size={16} />
+                )}
               </div>
             </div>
           </div>

@@ -20,7 +20,12 @@ const dummyMedia = [
   },
 ];
 
-export default function Reels({ mediaType, mediaSrc, index = 0 }) {
+export default function Reels({
+  mediaType,
+  mediaSrc,
+  index = 0,
+  viewportHeight,
+}) {
   const media =
     mediaType && mediaSrc
       ? { mediaType, mediaSrc }
@@ -71,14 +76,28 @@ export default function Reels({ mediaType, mediaSrc, index = 0 }) {
   };
 
   // Show/hide play button and progress bar on video area click/touch
-  const handleVideoAreaClick = () => {
-    if (showPlayButton) {
+  const handleVideoAreaClick = (e) => {
+    // Prevent default touch behavior
+    e.preventDefault();
+
+    // Toggle both play button and progress bar immediately
+    if (showPlayButton || showProgressBar) {
       setShowPlayButton(false);
+      setShowProgressBar(false);
       if (hideTimeout.current) clearTimeout(hideTimeout.current);
+      if (progressBarTimeout.current) clearTimeout(progressBarTimeout.current);
     } else {
-      showButtonTemporarily();
+      setShowPlayButton(true);
+      setShowProgressBar(true);
+      // Set timeouts to auto-hide
+      if (hideTimeout.current) clearTimeout(hideTimeout.current);
+      if (progressBarTimeout.current) clearTimeout(progressBarTimeout.current);
+
+      hideTimeout.current = setTimeout(() => setShowPlayButton(false), 3000);
+      progressBarTimeout.current = setTimeout(() => {
+        if (!isDragging) setShowProgressBar(false);
+      }, 3000);
     }
-    showProgressBarTemporarily();
   };
 
   // Hide progress bar when video starts playing, but not if dragging
@@ -117,16 +136,19 @@ export default function Reels({ mediaType, mediaSrc, index = 0 }) {
 
   // Mouse/touch handlers
   const handleDragStart = (e) => {
+    e.preventDefault(); // Prevent default touch behavior
     e.stopPropagation();
     setIsDragging(true);
-    if (progressBarTimeout.current) clearTimeout(progressBarTimeout.current); // <-- Add this line
+    if (progressBarTimeout.current) clearTimeout(progressBarTimeout.current);
     const newProgress = getProgressFromEvent(e);
     seekTo(newProgress);
-    document.body.style.userSelect = "none";
+    // Disable scroll while dragging
+    document.body.style.overflow = "hidden";
   };
 
   const handleDragMove = (e) => {
     if (!isDragging) return;
+    e.preventDefault();
     const newProgress = getProgressFromEvent(e);
     seekTo(newProgress);
     if (videoRef.current && videoRef.current.duration) {
@@ -137,8 +159,8 @@ export default function Reels({ mediaType, mediaSrc, index = 0 }) {
   const handleDragEnd = () => {
     setIsDragging(false);
     setDragTime(null);
-    document.body.style.userSelect = "";
-    // Start the hide timer only after dragging ends
+    // Re-enable scroll
+    document.body.style.overflow = "";
     if (progressBarTimeout.current) clearTimeout(progressBarTimeout.current);
     progressBarTimeout.current = setTimeout(() => {
       setShowProgressBar(false);
@@ -189,10 +211,14 @@ export default function Reels({ mediaType, mediaSrc, index = 0 }) {
 
   return (
     <div
-      className="feed-item relative h-screen w-full bg-gray-900 flex items-center justify-center"
+      className="feed-item relative w-full bg-gray-900 flex items-center justify-center"
       onClick={handleVideoAreaClick}
-      onTouchStart={handleVideoAreaClick}
-      style={{ cursor: "pointer" }}
+      onTouchEnd={handleVideoAreaClick} // Change from onTouchStart to onTouchEnd
+      style={{
+        cursor: "pointer",
+        height: `${viewportHeight}px`,
+        maxHeight: "100dvh",
+      }}
     >
       {media.mediaType === "video" ? (
         <>
@@ -206,27 +232,25 @@ export default function Reels({ mediaType, mediaSrc, index = 0 }) {
             onTimeUpdate={handleTimeUpdate}
           />
           {/* Play button centered, only visible when showPlayButton is true */}
-          <AnimatePresence>
-            {showPlayButton && (
-              <motion.button
-                type="button"
-                className="absolute top-[50%] left-[50%] transform -translate-x-[50%] -translate-y-[50%] pointer-events-auto z-10 flex items-center justify-center"
-                style={{ background: "none", border: "none" }}
-                onClick={handlePlayPause}
-                tabIndex={0}
-                aria-label={isPlaying ? "Pause video" : "Play video"}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Play
-                  className="text-white/65 text-6xl drop-shadow-lg"
-                  weight="fill"
-                />
-              </motion.button>
-            )}
-          </AnimatePresence>
+          {showPlayButton && (
+            <button
+              type="button"
+              className="absolute top-[50%] left-[50%] transform -translate-x-[50%] -translate-y-[50%] pointer-events-auto z-10 flex items-center justify-center opacity-0 scale-95 transition-all duration-300 ease-in-out play-button"
+              style={{
+                background: "none",
+                border: "none",
+                opacity: showPlayButton ? 1 : 0,
+                transform: `translate(-50%, -50%) scale(${
+                  showPlayButton ? 1 : 0.8
+                })`,
+              }}
+              onClick={handlePlayPause}
+              tabIndex={0}
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+              <Play className="text-white/70 text-6xl" weight="fill" />
+            </button>
+          )}
         </>
       ) : (
         <img
